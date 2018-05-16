@@ -1,0 +1,1 @@
+1、yield from 语法，允许generator生成器将其部分操作委派给另一个生成器
