@@ -1,1 +1,57 @@
 1、yield from 语法，允许generator生成器将其部分操作委派给另一个生成器
+
+2、inspect模块
+    用处：
+        1)对是否是模块，框架，函数等进行类型检查
+        2)获取源码
+        3)获取类或函数的参数的信息
+        4)解析堆栈
+    总结：
+        1)inspect.signature(fn) 将返回一个inspect.Signature类型的对象，值为fn这个函数的所有参数
+        eg:
+            def a(a, b=0, *c, d, e=1, **f):
+                pass
+            aa = inspect.signature(a)
+            print("inspect.signature（fn)是:%s" % aa)
+            print("inspect.signature（fn)的类型：%s" % (type(aa)))
+
+            结果：
+            inspect.signature（fn)是:(a, b=0, *c, d, e=1, **f)
+            inspect.signature（fn)的类型：<class 'inspect.Signature'>
+
+        2)inspect.Signature对象的paramerters属性是一个mappingproxy(映射)类型的对象，值为一个有序字典（Orderdict）
+            这个字典里的key是即为参数名，str类型
+            这个字典里的value是一个inspect.Prarmeter类型的对象，包含的一个参数的各种信息
+        eg:
+            bb = aa.parameters
+            print("signature.paramerters属性是:%s" % bb)
+            print("ignature.paramerters属性的类型是%s" % type(bb))
+
+            结果：
+            signature.paramerters属性是:OrderedDict([('a', <Parameter "a">), ('b', <Parameter "b=0">), ('c', <Parameter "*c">), ('d', <Parameter "d">), ('e', <Parameter "e=1">), ('f', <Parameter "**f">)])
+            signature.paramerters属性的类型是<class 'mappingproxy'>
+
+        3)inspect.Parameter对象的kind属性是一个_ParameterKind枚举类型的对象，值为这个参数的类型（可变参数，关键词参数，etc)
+        eg:
+            for cc, dd in bb.items():
+                ee = dd.kind
+                print("Parameter.kind属性是:%s" % ee)
+                print("Parameter.kind属性的类型是:%s" % type(ee))
+
+             结果：
+             Parameter.kind属性是:POSITIONAL_OR_KEYWORD
+             Parameter.kind属性的类型是:<enum '_ParameterKind'>
+
+         4)inspect.Parameter对象的default属性：如果这个参数有默认值，即返回这个默认值，如果没有，返回一个inspect._empty类
+         eg:
+            gg = dd.default
+            print("Parameter.default的值是: %s" % gg)
+            print("Parameter.default的属性是: %s" % type(gg))
+
+            结果：
+            Parameter.default的值是: <class 'inspect._empty'>
+            Parameter.default的属性是: <class 'type'>
+
+
+
+
